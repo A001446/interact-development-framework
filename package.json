@@ -1,6 +1,6 @@
 {
   "name": "interact-development-framework",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Framework for front-end developers working on Interact projects",
   "private": true,
   "scripts": {
