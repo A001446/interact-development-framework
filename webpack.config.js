@@ -1,6 +1,7 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { getIfUtils, removeEmpty } = require('webpack-config-utils')
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = env => {
     const { ifProd, ifNotProd } = getIfUtils(env);
@@ -27,6 +28,7 @@ module.exports = env => {
             ]
         },
         plugins: [
+            new CleanWebpackPlugin(['dist']),
             new VueLoaderPlugin()
         ],
         resolve: {

@@ -1,16 +1,12 @@
 {
   "name": "interact-development-framework",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Framework for front-end developers working on Interact projects",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist",
-    "prebuild:dev": "npm run clean",
-    "build:dev": "webpack --env.dev",
-    "prebuild-watch:dev": "npm run clean",
-    "build-watch:dev": "webpack --env.dev --watch",
-    "prebuild": "npm run clean",
-    "build": "webpack --env.prod",
+    "build": "webpack --env.dev",
+    "watch": "webpack --env.dev --watch",
+    "build:prod": "webpack --env.prod",
     "server": "http-server dist -p 7070"
   },
   "author": {
@@ -30,8 +26,8 @@
     "@types/jqueryui": "^1.12.3",
     "@types/node": "^10.9.4",
     "@types/webpack-env": "^1.13.6",
+    "clean-webpack-plugin": "^0.1.19",
     "http-server": "^0.11.1",
-    "rimraf": "^2.6.2",
     "ts-loader": "^5.0.0",
     "typescript": "^3.0.3",
     "vue-loader": "^15.4.1",
