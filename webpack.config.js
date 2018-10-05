@@ -8,7 +8,8 @@ module.exports = env => {
     return {
         entry: {
             "agent-app": './src/apps/agent/agent-app.ts',
-            "mobile-app": './src/apps/mobile/mobile-app.ts'
+            "mobile-app": './src/apps/mobile/mobile-app.ts',
+            "web-app": './src/apps/web/web-app.ts'
         },
         mode: ifProd('production', 'development'),
         devtool: ifProd('source-map', 'inline-source-map'),
