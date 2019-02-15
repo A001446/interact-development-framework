@@ -18,13 +18,13 @@ IDF currently has 2 opinionated features: the use of TypeScript and VueJS. These
 
 To install dependencies: npm install
 
-For development, build and watch files: npm run build-watch:dev
+For development, build and watch files: npm run watch
 The bundles can be found in the /dist folder. 
 Note: the vendors-bundle should be included prior to the app-bundle on the DOM. This priority can be set using the Interact console.
 
-For production, create a minified/uglified bundles with separate source maps: npm run build
+For production, create a minified/uglified bundles with separate source maps: npm run build:prod
 The source maps cannot be deployed to Interact, but can be attached in the Chrome debugger at runtime by specifying a custom URL.
 Developers can generate this custom URL by locally serving the dist folder via: npm run server
 
 For multi-developer teams: 
-Each team member should get their own app so that they do not overwrite other developers' bundles (extensions) during development.
+Each team member should define their own app in the Interact console so that they do not overwrite other developers' bundles (extensions) during development.
