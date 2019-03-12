@@ -43,7 +43,7 @@ module.exports = env => {
                 cacheGroups: {
                     commons: {
                         test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
+                        name: 'vendor',
                         chunks: 'all'
                     }
                 }
