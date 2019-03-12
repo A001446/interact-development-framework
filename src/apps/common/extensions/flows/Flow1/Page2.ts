@@ -1,6 +1,6 @@
 import h1h3 from './components/button-counter.vue'
 import buttonCounter from './components/h1h3-component.vue'
-import { newVueInstance } from '../../../../framework/vue-utils';
+import { newVueInstance } from '../../../../../framework/vue-utils';
 
 export const loaded: IDF.Extension.VoidOutput = ({ ctx, page }) => {
     console.log('Common App, Flow1/Page2 loaded event')

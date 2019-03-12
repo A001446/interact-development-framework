@@ -1,6 +1,6 @@
 import '@babel/polyfill'
 import 'whatwg-fetch'
-import { getPageName } from '../apps/common/utils'
+import { getPageName } from '../apps/common/extensions/utils'
 import { destroyVueInstances } from './vue-utils';
 
 type stringKeyValueAnyObject = { [key: string]: any }
