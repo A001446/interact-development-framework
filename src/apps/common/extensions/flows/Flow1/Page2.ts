@@ -1,8 +1,9 @@
 import h1h3 from './components/button-counter.vue'
 import buttonCounter from './components/h1h3-component.vue'
 import { newVueInstance } from '../../../../../framework/vue-utils';
+import { JQueryOutput, VoidOutput } from "../../../../../framework/base-app";
 
-export const loaded: IDF.Extension.VoidOutput = ({ ctx, page }) => {
+export const loaded: VoidOutput = ({ ctx, page }) => {
     console.log('Common App, Flow1/Page2 loaded event')
 
     // manipulate DOM as needed
@@ -24,7 +25,7 @@ export const loaded: IDF.Extension.VoidOutput = ({ ctx, page }) => {
     })
 }
 
-export const pageRenderer: IDF.Extension.JQueryOutput = ({ ctx, page }) => {
+export const pageRenderer: JQueryOutput = ({ ctx, page }) => {
     console.log('Common App, Flow1/Page2 pageRenderer event')
     return page;
 }

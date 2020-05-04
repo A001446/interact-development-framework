@@ -1,14 +1,17 @@
 import '@babel/polyfill'
 import 'whatwg-fetch'
-import { getPageName } from '../apps/common/extensions/utils'
+import { getFormattedPageName } from '../apps/common/extensions/utils'
 import { destroyVueInstances } from './vue-utils';
+import { IExtensionContext } from "typed-interact-extension/extensions";
 
-type stringKeyValueAnyObject = { [key: string]: any }
+export type Input = { ctx: IExtensionContext, page: JQuery };
+export type VoidOutput = (input: Input) => void;
+export type JQueryOutput = (input: Input) => JQuery;
 
 export default abstract class BaseApp {
 
-    protected moduleCacheByPageName: stringKeyValueAnyObject = {}
-    protected moduleCacheAllPages: stringKeyValueAnyObject = {}
+    protected moduleCacheByPageName: Record<string, any> = {}
+    protected moduleCacheAllPages: Record<string, any> = {}
 
     constructor(private appName: string) {
         this.cacheRequiredModules()
@@ -17,7 +20,7 @@ export default abstract class BaseApp {
 
     abstract cacheRequiredModules(): void
 
-    cacheModules(context: __WebpackModuleApi.RequireContext, moduleCache: stringKeyValueAnyObject) {
+    cacheModules(context: __WebpackModuleApi.RequireContext, moduleCache: Record<string, any>) {
         context.keys().forEach((key: string) => {
             // if inserting into the "page name" cache, we expect the format of key to be: "./FlowName/PageName.ts"
             // we want to convert such keys to: "FlowName_PageName", which is the expected format of Page names from Interact
@@ -30,31 +33,26 @@ export default abstract class BaseApp {
     registerApp() {
         initExtensions(this.appName, (app) => {
             app.registerExtension("loaded", (ctx, page) => {
-                const pageName = getPageName(ctx)
+                const pageName = getFormattedPageName(ctx)
+
                 // page-specific extension
-                if (this.moduleCacheByPageName[pageName] && this.moduleCacheByPageName[pageName].loaded) {
-                    this.moduleCacheByPageName[pageName].loaded({ ctx, page })
-                }
+                this.moduleCacheByPageName[pageName]?.loaded?.({ ctx, page });
+
                 // extensions that run on all pages
                 for (let module in this.moduleCacheAllPages) {
-                    if (this.moduleCacheAllPages[module].loaded) {
-                        this.moduleCacheAllPages[module].loaded({ ctx, page })
-                    }
+                    this.moduleCacheAllPages[module]?.loaded?.({ ctx, page });
                 }
             })
             app.registerExtension("pageRenderer", (ctx, page) => {
                 //special framework processing
                 destroyVueInstances()
-                const pageName = getPageName(ctx)
+                const pageName = getFormattedPageName(ctx)
                 // page-specific extension
-                if (this.moduleCacheByPageName[pageName] && this.moduleCacheByPageName[pageName].pageRenderer) {
-                    page = this.moduleCacheByPageName[pageName].pageRenderer({ ctx, page })
-                }
+                page = this.moduleCacheByPageName[pageName]?.pageRenderer?.({ ctx, page }) ?? page;
+
                 // extensions that run on all pages
                 for (let module in this.moduleCacheAllPages) {
-                    if (this.moduleCacheAllPages[module].pageRenderer) {
-                        page = this.moduleCacheAllPages[module].pageRenderer({ ctx, page })
-                    }
+                    page = this.moduleCacheAllPages[module]?.pageRenderer?.({ ctx, page }) ?? page;
                 }
                 return page
             })
