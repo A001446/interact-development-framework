@@ -1,7 +1,7 @@
 import h1h3 from './components/button-counter.vue'
 import buttonCounter from './components/h1h3-component.vue'
-import { newVueInstance } from '../../../../../framework/vue-utils';
 import { JQueryOutput, VoidOutput } from "../../../../../framework/base-app";
+import Vue from "vue";
 
 export const loaded: VoidOutput = ({ ctx, page }) => {
     console.log('Common App, Flow1/Page2 loaded event')
@@ -10,7 +10,7 @@ export const loaded: VoidOutput = ({ ctx, page }) => {
     $(".jaa-content-panel").append(`<div id="my-el"></div>`)
 
     // declare vue instances such that they will be managed by IDF - do NOT call: new Vue()
-    newVueInstance({
+    new Vue({
         el: '#my-el',
         components: {
             buttonCounter,

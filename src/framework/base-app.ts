@@ -1,7 +1,7 @@
 import '@babel/polyfill'
 import 'whatwg-fetch'
 import { getFormattedPageName } from '../apps/common/extensions/utils'
-import { destroyVueInstances } from './vue-utils';
+import { Vue } from './vue-utils';
 import { IExtensionContext } from "typed-interact-extension/extensions";
 
 export type Input = { ctx: IExtensionContext, page: JQuery };
@@ -45,7 +45,7 @@ export default abstract class BaseApp {
             })
             app.registerExtension("pageRenderer", (ctx, page) => {
                 //special framework processing
-                destroyVueInstances()
+                Vue.destroyVueInstances()
                 const pageName = getFormattedPageName(ctx)
                 // page-specific extension
                 page = this.moduleCacheByPageName[pageName]?.pageRenderer?.({ ctx, page }) ?? page;

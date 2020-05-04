@@ -1,18 +1,25 @@
-import Vue, { ComponentOptions } from "vue";
+import Vue from "vue";
 import { CombinedVueInstance } from "vue/types/vue";
+export { Vue }
 
-const vueInstances: CombinedVueInstance<Vue, object, object, object, Record<never, any>>[] = []
-
-export const newVueInstance = (config: ComponentOptions<Vue>) => {
-    const vue = new Vue(config)
-    vueInstances.push(vue)
-    return vue
+declare module "vue" {
+    interface VueConstructor {
+        destroyVueInstances(): void;
+    }
 }
 
-export const destroyVueInstances = () => {
-    let index = vueInstances.length
+const VUE_INSTANCES: CombinedVueInstance<Vue, object, object, object, Record<never, any>>[] = []
+
+Vue.mixin({
+    beforeCreate() {
+        VUE_INSTANCES.push(this);
+    }
+});
+
+Vue.destroyVueInstances = function () {
+    let index = VUE_INSTANCES.length;
     while (index--) {
-        vueInstances[index].$destroy()
-        vueInstances.splice(index, 1)
+        VUE_INSTANCES[index].$destroy();
+        VUE_INSTANCES.splice(index, 1);
     }
 }

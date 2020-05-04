@@ -17,6 +17,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "vue": "^2.5.17",
+    "vue-property-decorator": "^8.4.2",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
